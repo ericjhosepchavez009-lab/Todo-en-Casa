@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto Departamental La Fraternidad</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        fratBlue: '#1e3a8a',
+                        fratBlueDark: '#172554',
+                        fratGold: '#f59e0b',
+                        fratLight: '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar and modal styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .hero-bg{position:relative;overflow:hidden;background:#0f172a}
+        .hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s ease}
+        .hero-slide.active{opacity:1}
+        .hero-overlay{position:absolute;inset:0;background:linear-gradient(rgba(15,23,42,.42),rgba(30,58,138,.58));z-index:1}
+    
+        .hero-view-btn{position:absolute;right:18px;bottom:18px;z-index:20;width:42px;height:42px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(15,23,42,.28);color:#fff;backdrop-filter:blur(8px);opacity:.65;transition:.2s}.hero-view-btn:hover{opacity:1;background:rgba(15,23,42,.55);transform:scale(1.06)}
+        #heroViewer{position:fixed;inset:0;z-index:9999;background:rgba(2,6,23,.96);display:none;align-items:center;justify-content:center;padding:30px}#heroViewer.open{display:flex}#heroViewer img{max-width:94vw;max-height:92vh;width:auto;height:auto;object-fit:contain;box-shadow:0 20px 80px rgba(0,0,0,.5);user-select:none}.hero-v-close,.hero-v-prev,.hero-v-next{position:absolute;border:0;color:#fff;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border-radius:999px;cursor:pointer}.hero-v-close{top:20px;right:20px;width:44px;height:44px;font-size:20px}.hero-v-prev,.hero-v-next{top:50%;transform:translateY(-50%);width:48px;height:48px;font-size:22px}.hero-v-prev{left:20px}.hero-v-next{right:20px}.hero-v-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:12px;background:rgba(255,255,255,.08);padding:7px 12px;border-radius:999px}
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+    <!-- Top Contact Bar -->
+    <div class="bg-fratBlueDark text-white text-xs sm:text-sm py-2 px-4 shadow-inner">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-4">
+                <span><i class="fas fa-map-marker-alt text-fratGold mr-1.5"></i> Barrio Calona, Juticalpa, Olancho, Honduras</span>
+                <span class="hidden md:inline"><i class="fas fa-phone-alt text-fratGold mr-1.5"></i> (504) 2785-0000</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="bg-fratGold/20 text-fratGold font-semibold px-2.5 py-0.5 rounded-full border border-fratGold/30">Excelencia Académica</span>
+                <a href="#contacto" class="hover:text-fratGold transition-colors"><i class="fas fa-envelope mr-1"></i> Contacto</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo & Name -->
+            <a href="#" onclick="showHomeView(); return false;" class="flex items-center space-x-3 group">
+                <img src="imagenes/imagen1.jpg" alt="Logo La Fraternidad" class="w-12 h-12 rounded-xl object-cover shadow-md group-hover:scale-105 transition-transform">
+                <div>
+                    <h1 class="font-bold text-slate-900 text-base sm:text-lg leading-tight group-hover:text-fratBlue transition-colors">I.D. La Fraternidad</h1>
+                    <p class="text-xs text-slate-500 font-medium">Institución educativa líder en Olancho</p>
+                </div>
+            </a>
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm">
+                <a href="#" onclick="showHomeView(); return false;" class="nav-link px-3 py-2 rounded-lg text-slate-700 hover:text-fratBlue hover:bg-slate-100 transition-all active-nav" id="link-home">Inicio</a>
+                <a href="#conocenos" onclick="showHomeView(); setTimeout(() => document.getElementById('conocenos').scrollIntoView({behavior: 'smooth'}), 100); return false;" class="nav-link px-3 py-2 rounded-lg text-slate-700 hover:text-fratBlue hover:bg-slate-100 transition-all" id="link-conocenos">Conócenos</a>
+                <a href="#" onclick="switchView('quienes-somos'); return false;" class="nav-link px-3 py-2 rounded-lg text-slate-700 hover:text-fratBlue hover:bg-slate-100 transition-all" id="link-quienes">Quiénes Somos</a>
+                <a href="#" onclick="switchView('oferta-academica'); return false;" class="nav-link px-3 py-2 rounded-lg text-slate-700 hover:text-fratBlue hover:bg-slate-100 transition-all" id="link-oferta">Oferta Académica</a>
+                <a href="#" onclick="switchView('secretaria'); return false;" class="nav-link px-3 py-2 rounded-lg text-slate-700 hover:text-fratBlue hover:bg-slate-100 transition-all" id="link-secretaria">Secretaría</a>
+                <a href="#admisiones" onclick="showHomeView(); setTimeout(() => document.getElementById('admisiones').scrollIntoView({behavior: 'smooth'}), 100); return false;" class="nav-link px-3 py-2 rounded-lg text-slate-700 hover:text-fratBlue hover:bg-slate-100 transition-all">Admisiones</a>
+                <a href="#ubicacion" onclick="showHomeView(); setTimeout(() => document.getElementById('ubicacion').scrollIntoView({behavior: 'smooth'}), 100); return false;" class="nav-link px-3 py-2 rounded-lg text-slate-700 hover:text-fratBlue hover:bg-slate-100 transition-all">Ubicación</a>
+                <a href="#contacto" onclick="showHomeView(); setTimeout(() => document.getElementById('contacto').scrollIntoView({behavior: 'smooth'}), 100); return false;" class="ml-2 bg-fratBlue text-white px-4 py-2.5 rounded-xl font-semibold shadow hover:bg-fratBlueDark transition-all">Portal / Contacto</a>
+            </nav>
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden text-slate-700 hover:text-fratBlue p-2 focus:outline-none">
+                <i class="fas fa-bars text-2xl" id="mobile-menu-icon"></i>
+            </button>
+        </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2 shadow-lg">
+            <a href="#" onclick="showHomeView(); toggleMobileMenu(); return false;" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 font-medium">Inicio</a>
+            <a href="#conocenos" onclick="showHomeView(); toggleMobileMenu(); setTimeout(() => document.getElementById('conocenos').scrollIntoView({behavior: 'smooth'}), 100); return false;" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 font-medium">Conócenos</a>
+            <a href="#" onclick="switchView('quienes-somos'); toggleMobileMenu(); return false;" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 font-medium">Quiénes Somos</a>
+            <a href="#" onclick="switchView('oferta-academica'); toggleMobileMenu(); return false;" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 font-medium">Oferta Académica</a>
+            <a href="#" onclick="switchView('secretaria'); toggleMobileMenu(); return false;" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 font-medium">Secretaría</a>
+            <a href="#admisiones" onclick="showHomeView(); toggleMobileMenu(); setTimeout(() => document.getElementById('admisiones').scrollIntoView({behavior: 'smooth'}), 100); return false;" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 font-medium">Admisiones</a>
+            <a href="#ubicacion" onclick="showHomeView(); toggleMobileMenu(); setTimeout(() => document.getElementById('ubicacion').scrollIntoView({behavior: 'smooth'}), 100); return false;" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 font-medium">Ubicación</a>
+            <a href="#contacto" onclick="showHomeView(); toggleMobileMenu(); setTimeout(() => document.getElementById('contacto').scrollIntoView({behavior: 'smooth'}), 100); return false;" class="block w-full text-center bg-fratBlue text-white px-4 py-2.5 rounded-xl font-semibold shadow">Portal / Contacto</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- ==================== HOME VIEW ==================== -->
+        <div id="view-home" class="view-container">
+            <!-- Hero Banner Section -->
+            <section class="hero-bg text-white py-24 lg:py-36 px-4 relative flex items-center justify-center">
+                <!-- Carrusel de imágenes (imagen2.jpg a imagen6.jpg) -->
+                <img class="hero-slide active" src="imagenes/imagen2.jpg" alt="Instituto La Fraternidad - Vista 1">
+                <img class="hero-slide" src="imagenes/imagen3.jpg" alt="Instituto La Fraternidad - Vista 2">
+                <img class="hero-slide" src="imagenes/imagen4.jpg" alt="Instituto La Fraternidad - Vista 3">
+                <img class="hero-slide" src="imagenes/imagen5.jpg" alt="Instituto La Fraternidad - Vista 4">
+                <img class="hero-slide" src="imagenes/imagen6.jpg" alt="Instituto La Fraternidad - Vista 5">
+                
+                <div class="hero-overlay"></div>
+                <button class="hero-view-btn" onclick="openHeroViewer()" aria-label="Ver imágenes en pantalla completa" title="Ver imagen completa">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <div class="max-w-5xl mx-auto text-center space-y-6 relative z-10">
+                    <span class="inline-block bg-fratGold text-slate-900 font-bold px-4 py-1.5 rounded-full text-xs sm:text-sm tracking-wide uppercase shadow-lg">
+                        Orgullo Olanchano • Juticalpa
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+                        Instituto Departamental <br/><span class="text-fratGold">La Fraternidad</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-slate-200 max-w-3xl mx-auto font-light leading-relaxed">
+                        Forjando generaciones con sólida formación académica, valores éticos y excelencia técnica en el corazón de Olancho.
+                    </p>
+                    <div class="pt-4 flex flex-wrap justify-center gap-4">
+                        <button onclick="switchView('oferta-academica')" class="bg-fratGold hover:bg-amber-500 text-slate-900 font-bold px-8 py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-1 flex items-center space-x-2">
+                            <span>Ver Oferta Académica</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button onclick="switchView('quienes-somos')" class="bg-white/10 hover:bg-white/25 text-white border border-white/30 backdrop-blur-md font-semibold px-8 py-4 rounded-xl transition-all">
+                            Conoce Nuestra Historia
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Bar Section -->
+            <section id="conocenos" class="bg-white py-12 border-b border-slate-200 shadow-sm relative z-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x-0 md:divide-x divide-slate-100">
+                        <div class="p-4">
+                            <div class="text-4xl lg:text-5xl font-black text-fratBlue mb-1">50+</div>
+                            <div class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Años de trayectoria</div>
+                        </div>
+                        <div class="p-4">
+                            <div class="text-4xl lg:text-5xl font-black text-fratGold mb-1">2,500+</div>
+                            <div class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Estudiantes activos</div>
+                        </div>
+                        <div class="p-4">
+                            <div class="text-4xl lg:text-5xl font-black text-fratBlue mb-1">10+</div>
+                            <div class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Carreras y ciclos</div>
+                        </div>
+                        <div class="p-4">
+                            <div class="text-4xl lg:text-5xl font-black text-fratGold mb-1">100%</div>
+                            <div class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Compromiso social</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features / Why Choose Us Section -->
+            <section class="py-20 bg-slate-100 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="text-fratBlue font-bold text-sm tracking-widest uppercase bg-blue-100 px-3 py-1 rounded-full">Excelencia integral</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">¿Por qué elegir La Fraternidad?</h2>
+                        <p class="text-slate-600 mt-3 text-base sm:text-lg">Proveemos un ambiente propicio para el desarrollo cognitivo, tecnológico y humano de cada alumno.</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-200">
+                            <div class="w-14 h-14 bg-blue-50 text-fratBlue rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Docentes calificados</h3>
+                            <p class="text-slate-600 leading-relaxed">Profesores altamente capacitados con sólida vocación pedagógica comprometidos con el éxito estudiantil.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-200">
+                            <div class="w-14 h-14 bg-amber-50 text-fratGold rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Tecnología y talleres</h3>
+                            <p class="text-slate-600 leading-relaxed">Laboratorios de computación equipados y talleres especializados para carreras técnicas de alta demanda laboral.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-200">
+                            <div class="w-14 h-14 bg-blue-50 text-fratBlue rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Ambiente fraterno</h3>
+                            <p class="text-slate-600 leading-relaxed">Fomentamos la fraternidad, el respeto mutuo, el liderazgo juvenil y el deporte en toda la comunidad.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Galería Destacada -->
+            <section class="py-16 bg-white px-4 sm:px-6 lg:px-8 border-t border-slate-200">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center max-w-3xl mx-auto mb-12">
+                        <span class="text-fratBlue font-bold text-sm tracking-widest uppercase bg-blue-100 px-3 py-1 rounded-full">Nuestras Instalaciones</span>
+                        <h2 class="text-3xl font-black text-slate-900 mt-3">Galería Institucional</h2>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <img src="imagenes/imagen7.jpg" alt="Instalaciones 1" class="rounded-xl shadow object-cover h-48 w-full hover:scale-105 transition-transform">
+                        <img src="imagenes/imagen8.jpg" alt="Instalaciones 2" class="rounded-xl shadow object-cover h-48 w-full hover:scale-105 transition-transform">
+                        <img src="imagenes/imagen9.jpg" alt="Instalaciones 3" class="rounded-xl shadow object-cover h-48 w-full hover:scale-105 transition-transform">
+                        <img src="imagenes/imagen10.jpg" alt="Instalaciones 4" class="rounded-xl shadow object-cover h-48 w-full hover:scale-105 transition-transform">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Preview of Offerings Section -->
+            <section class="py-20 bg-slate-50 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                        <div>
+                            <span class="text-fratBlue font-bold text-sm tracking-widest uppercase">Oferta educativa</span>
+                            <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-2">Jornadas y modalidades</h2>
+                        </div>
+                        <button onclick="switchView('oferta-academica')" class="mt-4 md:mt-0 text-fratBlue font-bold hover:text-fratBlueDark flex items-center space-x-2">
+                            <span>Ver todas las jornadas detalladas</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-6 hover:border-fratBlue transition-all flex flex-col justify-between shadow-sm">
+                            <div>
+                                <img src="imagenes/imagen11.jpg" alt="Jornada Matutina" class="w-full h-40 object-cover rounded-xl mb-4">
+                                <div class="inline-block bg-blue-100 text-fratBlue font-bold text-xs px-3 py-1 rounded-full mb-2">Matutina</div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Jornada Matutina</h3>
+                                <p class="text-slate-600 text-sm mb-6">Ciclo Común y bachilleratos técnicos y científicos en horario diurno regular.</p>
+                            </div>
+                            <button onclick="switchView('oferta-academica'); filterShift('matutina');" class="w-full bg-fratBlue text-white font-semibold py-2.5 rounded-xl text-sm hover:bg-fratBlueDark transition-colors">
+                                Ver Carreras Matutinas
+                            </button>
+                        </div>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-6 hover:border-fratBlue transition-all flex flex-col justify-between shadow-sm">
+                            <div>
+                                <img src="imagenes/imagen12.jpg" alt="Jornada Vespertina" class="w-full h-40 object-cover rounded-xl mb-4">
+                                <div class="inline-block bg-amber-100 text-amber-800 font-bold text-xs px-3 py-1 rounded-full mb-2">Vespertina</div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Jornada Vespertina</h3>
+                                <p class="text-slate-600 text-sm mb-6">Bachilleratos Técnicos Profesionales enfocados en comercio y servicios por la tarde.</p>
+                            </div>
+                            <button onclick="switchView('oferta-academica'); filterShift('vespertina');" class="w-full bg-fratBlue text-white font-semibold py-2.5 rounded-xl text-sm hover:bg-fratBlueDark transition-colors">
+                                Ver Carreras Vespertinas
+                            </button>
+                        </div>
+                        <div class="bg-white border border-slate-200 rounded-2xl p-6 hover:border-fratBlue transition-all flex flex-col justify-between shadow-sm">
+                            <div>
+                                <img src="imagenes/imagen13.jpg" alt="Nocturna e ISEMED" class="w-full h-40 object-cover rounded-xl mb-4">
+                                <div class="inline-block bg-indigo-100 text-indigo-800 font-bold text-xs px-3 py-1 rounded-full mb-2">Nocturna / ISEMED</div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Nocturna & ISEMED</h3>
+                                <p class="text-slate-600 text-sm mb-6">Educación flexible para jóvenes y adultos que trabajan y desean superarse.</p>
+                            </div>
+                            <button onclick="switchView('oferta-academica'); filterShift('nocturna');" class="w-full bg-fratBlue text-white font-semibold py-2.5 rounded-xl text-sm hover:bg-fratBlueDark transition-colors">
+                                Ver Programas Especiales
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Summary on Homepage -->
+            <section class="py-20 bg-slate-900 text-white px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <span class="text-fratGold font-bold text-sm tracking-widest uppercase">Legado de honor</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold">Una institución pilar en la sociedad olanchana</h2>
+                        <p class="text-slate-300 leading-relaxed">
+                            Fundado con la firme convicción de expandir el conocimiento y transformar vidas, el Instituto Departamental La Fraternidad ha formado a miles de profesionales que hoy lideran en Olancho y en toda Honduras.
+                        </p>
+                        <div class="pt-2">
+                            <button onclick="switchView('quienes-somos')" class="bg-fratGold hover:bg-amber-500 text-slate-900 font-bold px-6 py-3 rounded-xl shadow transition-colors">
+                                Leer Historia Completa
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="bg-slate-800 border border-slate-700 p-8 rounded-3xl shadow-2xl relative z-10 space-y-6 overflow-hidden">
+                            <img src="imagenes/imagen14.jpg" alt="Historia La Fraternidad" class="w-full h-48 object-cover rounded-xl mb-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-fratGold text-slate-900 flex items-center justify-center font-bold text-xl">
+                                    <i class="fas fa-landmark"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Tradición y futuro</h4>
+                                    <p class="text-slate-400 text-xs">Juticalpa, Olancho</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-300 text-sm italic">
+                                "La fraternidad no es solo un nombre, es el lazo inquebrantable de hermandad, superación y civismo que une a cada estudiante bajo nuestro estandarte."
+                            </p>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-72 h-72 bg-fratBlue/30 rounded-full blur-3xl pointer-events-none"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admissions Section -->
+            <section id="admisiones" class="py-20 bg-white px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="bg-gradient-to-br from-fratBlue to-fratBlueDark text-white rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden">
+                        <div class="relative z-10 max-w-2xl space-y-6">
+                            <span class="bg-fratGold text-slate-900 font-bold px-3.5 py-1 rounded-full text-xs uppercase">Proceso abierto</span>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold">Inscripciones y admisiones</h2>
+                            <p class="text-slate-200 leading-relaxed">
+                                Forma parte de nuestra gran familia estudiantil. Conoce los requisitos de matrícula, fechas importantes y documentos necesarios para el año lectivo.
+                            </p>
+                            <div class="flex flex-wrap gap-4 pt-2">
+                                <a href="#contacto" class="bg-fratGold hover:bg-amber-500 text-slate-900 font-bold px-6 py-3.5 rounded-xl shadow transition-colors">
+                                    Solicitar información de matrícula
+                                </a>
+                            </div>
+                        </div>
+                        <div class="absolute right-0 bottom-0 opacity-20 pointer-events-none translate-x-10 translate-y-10 hidden md:block">
+                            <img src="imagenes/imagen15.jpg" alt="Admisiones" class="w-96 h-96 object-cover rounded-full">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location Section -->
+            <section id="ubicacion" class="py-20 bg-slate-100 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="text-fratBlue font-bold text-sm tracking-widest uppercase bg-blue-100 px-3 py-1 rounded-full">Encuéntranos</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Ubicación</h2>
+                        <p class="text-slate-600 mt-3 text-base">Nos encontramos ubicados en el corazón de Juticalpa, listos para atenderte.</p>
+                    </div>
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-blue-50 text-fratBlue rounded-xl flex items-center justify-center text-xl flex-shrink-0"><i class="fas fa-map-pin"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-lg">Dirección exacta</h4>
+                                    <p class="text-slate-600 text-sm mt-1">Barrio Calona, Juticalpa, Departamento de Olancho, Honduras.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-amber-50 text-fratGold rounded-xl flex items-center justify-center text-xl flex-shrink-0"><i class="fas fa-clock"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-lg">Horario de atención</h4>
+                                    <p class="text-slate-600 text-sm mt-1">Lunes a Viernes: 7:00 AM - 5:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden h-[350px] flex items-center justify-center relative">
+                            <!-- Mapa/Imagen de Ubicación -->
+                            <img src="imagenes/imagen16.jpg" alt="Ubicación Instituto La Fraternidad" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-slate-900/40 flex flex-col items-center justify-center text-center p-6 text-white">
+                                <div class="w-16 h-16 bg-fratBlue text-white rounded-full flex items-center justify-center text-2xl shadow-lg mb-4">
+                                    <i class="fas fa-school"></i>
+                                </div>
+                                <h3 class="text-xl font-bold">Instituto Departamental La Fraternidad</h3>
+                                <p class="text-slate-200 text-sm mt-1">Barrio Calona, Juticalpa, Olancho</p>
+                                <span class="mt-4 bg-white text-fratBlue px-4 py-2 rounded-xl text-xs font-semibold shadow">
+                                    <i class="fas fa-map-marked-alt mr-1"></i> Abierto en jornadas diurnas y nocturnas
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== QUIENES SOMOS VIEW ==================== -->
+        <div id="view-quienes-somos" class="view-container hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-fratBlue font-bold text-sm tracking-widest uppercase bg-blue-100 px-3 py-1 rounded-full">Nuestra Identidad</span>
+                <h1 class="text-3xl sm:text-5xl font-black text-slate-900 mt-3">Quiénes Somos</h1>
+                <p class="text-slate-600 mt-3 text-lg">Conoce la historia, los principios y la filosofía que guían al Instituto Departamental La Fraternidad.</p>
+            </div>
+
+            <!-- Tab Navigation inside Quiénes Somos -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12">
+                <button onclick="switchQuienesTab('historia')" id="btn-tab-historia" class="quienes-tab-btn px-6 py-3 rounded-xl font-bold text-sm transition-all bg-fratBlue text-white shadow">
+                    <i class="fas fa-book-open mr-2"></i> Historia
+                </button>
+                <button onclick="switchQuienesTab('mision-vision')" id="btn-tab-mision-vision" class="quienes-tab-btn px-6 py-3 rounded-xl font-bold text-sm transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+                    <i class="fas fa-bullseye mr-2"></i> Misión y visión
+                </button>
+                <button onclick="switchQuienesTab('filosofia')" id="btn-tab-filosofia" class="quienes-tab-btn px-6 py-3 rounded-xl font-bold text-sm transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+                    <i class="fas fa-gem mr-2"></i> Filosofía y valores
+                </button>
+            </div>
+
+            <!-- Tab Content: Historia -->
+            <div id="content-tab-historia" class="quienes-content space-y-8 bg-white p-8 sm:p-12 rounded-3xl shadow-sm border border-slate-200">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="text-fratBlue font-bold text-sm uppercase">Nuestros orígenes</span>
+                        <h2 class="text-3xl font-extrabold text-slate-900 mt-1 mb-4">Medio siglo de luz educativa en Olancho</h2>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            El Instituto Departamental La Fraternidad nació como respuesta a la apremiante necesidad de la juventud olanchana de contar con una institución de educación secundaria pública y de alto nivel en la ciudad de Juticalpa.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed">
+                            A lo largo de las décadas, generaciones de catedráticos, directivos y estudiantes han consolidado su prestigio, convirtiéndolo en un verdadero templo del saber, la cultura y el civismo en la región oriental de Honduras.
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <img src="imagenes/imagen17.jpg" alt="Historia del Instituto" class="w-full h-64 object-cover rounded-2xl shadow">
+                        <div class="bg-blue-50 border border-blue-100 p-6 rounded-2xl">
+                            <div class="flex items-center space-x-3 text-fratBlue mb-3">
+                                <i class="fas fa-history text-xl"></i>
+                                <h4 class="font-bold text-lg">Hitos históricos</h4>
+                            </div>
+                            <ul class="space-y-2 text-sm text-slate-700">
+                                <li class="flex items-start space-x-2"><i class="fas fa-check-circle text-fratBlue mt-1"></i><span>Establecimiento formal en Juticalpa con un firme compromiso comunitario.</span></li>
+                                <li class="flex items-start space-x-2"><i class="fas fa-check-circle text-fratBlue mt-1"></i><span>Ampliación progresiva a jornadas vespertinas y nocturnas.</span></li>
+                                <li class="flex items-start space-x-2"><i class="fas fa-check-circle text-fratBlue mt-1"></i><span>Incorporación de carreras técnicas profesionales de vanguardia.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Misión y Visión -->
+            <div id="content-tab-mision-vision" class="quienes-content hidden space-y-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+                        <img src="imagenes/imagen18.jpg" alt="Misión Institucional" class="w-full h-48 object-cover rounded-2xl mb-4">
+                        <div class="w-14 h-14 bg-blue-50 text-fratBlue rounded-2xl flex items-center justify-center text-2xl font-bold"><i class="fas fa-bullseye"></i></div>
+                        <h3 class="text-2xl font-bold text-slate-900">Misión institucional</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            Formar integralmente a los jóvenes en los niveles de educación básica y media, dotándolos de competencias científicas, tecnológicas, éticas y humanísticas que les permitan incorporarse con éxito a la educación superior y al mercado laboral, fomentando siempre los valores de la fraternidad y el amor por la patria.
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+                        <img src="imagenes/imagen19.jpg" alt="Visión Institucional" class="w-full h-48 object-cover rounded-2xl mb-4">
+                        <div class="w-14 h-14 bg-amber-50 text-fratGold rounded-2xl flex items-center justify-center text-2xl font-bold"><i class="fas fa-eye"></i></div>
+                        <h3 class="text-2xl font-bold text-slate-900">Visión institucional</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            Ser la institución educativa líder a nivel nacional por su excelencia académica, innovación pedagógica y compromiso social, reconocida por formar ciudadanos íntegros, críticos y líderes transformadores de la sociedad hondureña.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Filosofía y Valores -->
+            <div id="content-tab-filosofia" class="quienes-content hidden space-y-8">
+                <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 text-center">Nuestros valores fundamentales</h2>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-3">
+                            <img src="imagenes/imagen20.jpg" alt="Valor Fraternidad" class="w-full h-32 object-cover rounded-xl mb-3">
+                            <div class="w-12 h-12 bg-fratBlue text-white rounded-full mx-auto flex items-center justify-center text-xl font-bold"><i class="fas fa-handshake"></i></div>
+                            <h4 class="font-bold text-slate-900 text-lg">Fraternidad</h4>
+                            <p class="text-slate-600 text-sm">Solidaridad, respeto y compañerismo en cada miembro de la comunidad educativa.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-3">
+                            <img src="imagenes/imagen21.jpg" alt="Valor Excelencia" class="w-full h-32 object-cover rounded-xl mb-3">
+                            <div class="w-12 h-12 bg-fratGold text-slate-900 rounded-full mx-auto flex items-center justify-center text-xl font-bold"><i class="fas fa-award"></i></div>
+                            <h4 class="font-bold text-slate-900 text-lg">Excelencia</h4>
+                            <p class="text-slate-600 text-sm">Búsqueda constante de la más alta calidad en el estudio y el desempeño diario.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-3">
+                            <img src="imagenes/imagen22.jpg" alt="Valor Ética" class="w-full h-32 object-cover rounded-xl mb-3">
+                            <div class="w-12 h-12 bg-fratBlue text-white rounded-full mx-auto flex items-center justify-center text-xl font-bold"><i class="fas fa-balance-scale"></i></div>
+                            <h4 class="font-bold text-slate-900 text-lg">Ética</h4>
+                            <p class="text-slate-600 text-sm">Honradez, integridad y rectitud moral en todas nuestras actuaciones.</p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 text-center space-y-3">
+                            <img src="imagenes/imagen23.jpg" alt="Valor Civismo" class="w-full h-32 object-cover rounded-xl mb-3">
+                            <div class="w-12 h-12 bg-fratGold text-slate-900 rounded-full mx-auto flex items-center justify-center text-xl font-bold"><i class="fas fa-flag"></i></div>
+                            <h4 class="font-bold text-slate-900 text-lg">Civismo</h4>
+                            <p class="text-slate-600 text-sm">Amor profundo por Honduras, respeto a los símbolos patrios y deber ciudadano.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== OFERTA ACADEMICA VIEW ==================== -->
+        <div id="view-oferta-academica" class="view-container hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-fratBlue font-bold text-sm tracking-widest uppercase bg-blue-100 px-3 py-1 rounded-full">Programas Educativos</span>
+                <h1 class="text-3xl sm:text-5xl font-black text-slate-900 mt-3">Oferta Académica</h1>
+                <p class="text-slate-600 mt-3 text-lg">Explora cada una de nuestras jornadas educativas independientes y sus carreras específicas.</p>
+            </div>
+
+            <!-- Shift Filter Navigation Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12">
+                <button onclick="filterShift('matutina')" id="shift-btn-matutina" class="shift-tab-btn px-5 py-3 rounded-xl font-bold text-sm transition-all bg-fratBlue text-white shadow">
+                    <i class="fas fa-sun mr-2"></i> Jornada Matutina
+                </button>
+                <button onclick="filterShift('vespertina')" id="shift-btn-vespertina" class="shift-tab-btn px-5 py-3 rounded-xl font-bold text-sm transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+                    <i class="fas fa-cloud-sun mr-2"></i> Jornada Vespertina
+                </button>
+                <button onclick="filterShift('nocturna')" id="shift-btn-nocturna" class="shift-tab-btn px-5 py-3 rounded-xl font-bold text-sm transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+                    <i class="fas fa-moon mr-2"></i> Jornada Nocturna
+                </button>
+                <button onclick="filterShift('isemed')" id="shift-btn-isemed" class="shift-tab-btn px-5 py-3 rounded-xl font-bold text-sm transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+                    <i class="fas fa-book-reader mr-2"></i> ISEMED
+                </button>
+            </div>
+
+            <!-- SHIFT CONTAINER: MATUTINA -->
+            <div id="shift-content-matutina" class="shift-pane space-y-8">
+                <div class="bg-gradient-to-r from-blue-900 to-fratBlue text-white p-8 rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <span class="bg-fratGold text-slate-900 font-bold px-3 py-1 rounded-full text-xs uppercase">Turno Diurno</span>
+                        <h2 class="text-3xl font-extrabold mt-2">Jornada Matutina</h2>
+                        <p class="text-slate-200 mt-1 max-w-xl text-sm">Nuestra jornada principal con sólida formación académica, ciclo común y bachilleratos de alta exigencia.</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 text-center">
+                        <span class="block text-2xl font-black text-fratGold">4 Carreras</span>
+                        <span class="text-xs text-slate-200 uppercase font-semibold">Disponibles</span>
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                    <!-- Matutina Item 1 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen24.jpg" alt="Ciclo Común" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-blue-100 text-fratBlue text-xs font-bold px-3 py-1 rounded-full">Básica</span>
+                                <i class="fas fa-graduation-cap text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Ciclo Común (7° a 9° Grado)</h3>
+                            <p class="text-slate-600 text-sm mb-6">Formación integral para estudiantes de séptimo, octavo y noveno grado preparando bases académicas sólidas.</p>
+                        </div>
+                        <button onclick="openStudyPlan('Ciclo Común de Cultura General', 'Jornada Matutina', ['Español', 'Matemáticas', 'Ciencias Naturales', 'Estudios Sociales', 'Inglés', 'Educación Física', 'Artes Plásticas', 'Hogar / Taller'], '7°, 8° y 9° Grado')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                    <!-- Matutina Item 2 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen25.jpg" alt="BTP Informática" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">Técnico Profesional</span>
+                                <i class="fas fa-laptop-code text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">BTP en Informática</h3>
+                            <p class="text-slate-600 text-sm mb-6">Capacitación en programación, mantenimiento de computadoras, redes y desarrollo de software.</p>
+                        </div>
+                        <button onclick="openStudyPlan('BTP en Informática', 'Jornada Matutina', ['Programación I y II', 'Sistemas Operativos', 'Diseño Web', 'Mantenimiento de Hardware', 'Base de Datos', 'Redes de Computadoras', 'Matemáticas Aplicadas'], '3 Años')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                    <!-- Matutina Item 3 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen26.jpg" alt="Ciencias y Humanidades" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-blue-100 text-fratBlue text-xs font-bold px-3 py-1 rounded-full">Científico</span>
+                                <i class="fas fa-flask text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Bachillerato en Ciencias y Humanidades</h3>
+                            <p class="text-slate-600 text-sm mb-6">Bachillerato general orientado a preparar al estudiante con alto rigor analítico para ingresar a cualquier universidad.</p>
+                        </div>
+                        <button onclick="openStudyPlan('Bachillerato en Ciencias y Humanidades', 'Jornada Matutina', ['Física Avanzada', 'Química General y Orgánica', 'Biología', 'Filosofía', 'Sociología', 'Matemáticas Avanzadas', 'Literatura Hispanoamericana'], '2 Años')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                    <!-- Matutina Item 4 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen27.jpg" alt="Promoción Social" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Social</span>
+                                <i class="fas fa-hands-helping text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Bachillerato en Promoción Social</h3>
+                            <p class="text-slate-600 text-sm mb-6">Formación en desarrollo comunitario, trabajo social, psicología comunitaria y proyectos de bienestar social.</p>
+                        </div>
+                        <button onclick="openStudyPlan('Bachillerato en Promoción Social', 'Jornada Matutina', ['Psicología Evolutiva', 'Trabajo Social Comunitario', 'Legislación Social', 'Proyectos de Desarrollo', 'Sociología', 'Metodología de Investigación'], '2 Años')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SHIFT CONTAINER: VESPERTINA -->
+            <div id="shift-content-vespertina" class="shift-pane space-y-8 hidden">
+                <div class="bg-gradient-to-r from-amber-800 to-amber-600 text-white p-8 rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <span class="bg-fratGold text-slate-900 font-bold px-3 py-1 rounded-full text-xs uppercase">Turno Tarde</span>
+                        <h2 class="text-3xl font-extrabold mt-2">Jornada Vespertina</h2>
+                        <p class="text-slate-100 mt-1 max-w-xl text-sm">Orientada a la administración, contabilidad y comercio con alta inserción en el sector empresarial.</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 text-center">
+                        <span class="block text-2xl font-black text-fratGold">2 Carreras</span>
+                        <span class="text-xs text-slate-100 uppercase font-semibold">Disponibles</span>
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <!-- Vespertina Item 1 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen28.jpg" alt="Contaduría y Finanzas" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">Comercio</span>
+                                <i class="fas fa-calculator text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">BTP en Contaduría y Finanzas</h3>
+                            <p class="text-slate-600 text-sm mb-6">Gestión contable, auditoría básica, finanzas corporativas y manejo de software contable moderno.</p>
+                        </div>
+                        <button onclick="openStudyPlan('BTP en Contaduría y Finanzas', 'Jornada Vespertina', ['Contabilidad General I y II', 'Matemáticas Financieras', 'Legislación Tributaria', 'Auditoría', 'Práctica Profesional'], '3 Años')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                    <!-- Vespertina Item 2 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen29.jpg" alt="Administración de Empresas" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">Gestión</span>
+                                <i class="fas fa-briefcase text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">BTP en Administración de Empresas</h3>
+                            <p class="text-slate-600 text-sm mb-6">Liderazgo empresarial, mercadeo, gestión de recursos humanos y formulación de proyectos.</p>
+                        </div>
+                        <button onclick="openStudyPlan('BTP en Administración de Empresas', 'Jornada Vespertina', ['Administración General', 'Mercadotecnia', 'Recursos Humanos', 'Contabilidad Gerencial', 'Economía', 'Emprendimiento'], '3 Años')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SHIFT CONTAINER: NOCTURNA -->
+            <div id="shift-content-nocturna" class="shift-pane space-y-8 hidden">
+                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-8 rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <span class="bg-fratGold text-slate-900 font-bold px-3 py-1 rounded-full text-xs uppercase">Turno Noche</span>
+                        <h2 class="text-3xl font-extrabold mt-2">Jornada Nocturna</h2>
+                        <p class="text-slate-300 mt-1 max-w-xl text-sm">Oportunidad educativa flexible para adultos y jóvenes trabajadores que desean culminar su secundaria.</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 text-center">
+                        <span class="block text-2xl font-black text-fratGold">2 Programas</span>
+                        <span class="text-xs text-slate-300 uppercase font-semibold">Disponibles</span>
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <!-- Nocturna Item 1 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen30.jpg" alt="Ciclo Común Nocturno" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">Educación Básica</span>
+                                <i class="fas fa-moon text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Ciclo Común Nocturno</h3>
+                            <p class="text-slate-600 text-sm mb-6">Plan acelerado de educación básica para adultos en horario nocturno accesible.</p>
+                        </div>
+                        <button onclick="openStudyPlan('Ciclo Común Nocturno', 'Jornada Nocturna', ['Español Acelerado', 'Matemáticas Básicas', 'Ciencias Naturales', 'Estudios Sociales', 'Educación Cívica'], 'Módulos Flexibles')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                    <!-- Nocturna Item 2 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen31.jpg" alt="Bachillerato Nocturno" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">Bachillerato</span>
+                                <i class="fas fa-user-graduate text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Bachillerato Nocturno</h3>
+                            <p class="text-slate-600 text-sm mb-6">Obtén tu título de secundaria en horario nocturno con planes adaptados al trabajador.</p>
+                        </div>
+                        <button onclick="openStudyPlan('Bachillerato en Ciencias y Humanidades Nocturno', 'Jornada Nocturna', ['Español', 'Matemáticas', 'Física', 'Química', 'Filosofía', 'Sociología'], 'Sistema Semestral / Flexible')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SHIFT CONTAINER: ISEMED -->
+            <div id="shift-content-isemed" class="shift-pane space-y-8 hidden">
+                <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-8 rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <span class="bg-fratGold text-slate-900 font-bold px-3 py-1 rounded-full text-xs uppercase">Sistema a Distancia</span>
+                        <h2 class="text-3xl font-extrabold mt-2">ISEMED La Fraternidad</h2>
+                        <p class="text-slate-100 mt-1 max-w-xl text-sm">Sistema de Educación Media a Distancia para quienes estudian los fines de semana.</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 text-center">
+                        <span class="block text-2xl font-black text-fratGold">Fines de Semana</span>
+                        <span class="text-xs text-slate-100 uppercase font-semibold">Modalidad</span>
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <!-- ISEMED Item 1 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen32.jpg" alt="Ciclo Común ISEMED" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Básica a Distancia</span>
+                                <i class="fas fa-book-reader text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Ciclo Común ISEMED</h3>
+                            <p class="text-slate-600 text-sm mb-6">Clases sabatinas o dominicales con tutorías especializadas y guías de autoaprendizaje.</p>
+                        </div>
+                        <button onclick="openStudyPlan('Ciclo Común ISEMED', 'ISEMED', ['Módulos de Español', 'Módulos de Matemáticas', 'Módulos de Ciencias', 'Módulos de Sociales'], 'Sábados o Domingos')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                    <!-- ISEMED Item 2 -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <img src="imagenes/imagen33.jpg" alt="Bachillerato ISEMED" class="w-full h-44 object-cover rounded-xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Bachillerato a Distancia</span>
+                                <i class="fas fa-graduation-cap text-slate-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Bachillerato ISEMED</h3>
+                            <p class="text-slate-600 text-sm mb-6">Culmina tu bachillerato asistiendo los fines de semana con asesoría docente profesional.</p>
+                        </div>
+                        <button onclick="openStudyPlan('Bachillerato en Ciencias y Humanidades ISEMED', 'ISEMED', ['Asignaturas por Tutoría', 'Pruebas Semestrales', 'Seminario', 'Práctica'], 'Fines de Semana')" class="w-full bg-fratBlue hover:bg-fratBlueDark text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
+                            <span>Ver Plan de Estudio</span><i class="fas fa-file-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SECRETARIA VIEW ==================== -->
+        <div id="view-secretaria" class="view-container hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-fratBlue font-bold text-sm tracking-widest uppercase bg-blue-100 px-3 py-1 rounded-full">Gestión Académica y Documental</span>
+                <h1 class="text-3xl sm:text-5xl font-black text-slate-900 mt-3">Secretaría General</h1>
+                <p class="text-slate-600 mt-3 text-lg">Área encargada del registro académico, emisión de certificaciones, matrícula de estudiantes y trámites oficiales.</p>
+            </div>
+
+            <!-- Banner Informativo de Secretaría -->
+            <div class="bg-gradient-to-r from-fratBlueDark to-fratBlue text-white p-8 rounded-3xl shadow-lg mb-12 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2">
+                    <span class="bg-fratGold text-slate-900 font-bold px-3 py-1 rounded-full text-xs uppercase">Atención al Público</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Trámites y Consultas Académicas</h2>
+                    <p class="text-slate-200 text-sm max-w-2xl">Atención presencial en ventanilla de Lunes a Viernes de 7:30 AM a 4:30 PM. Presenta tu documento de identificación para cualquier solicitud.</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <a href="#contacto" onclick="showHomeView(); setTimeout(() => document.getElementById('contacto').scrollIntoView({behavior: 'smooth'}), 100);" class="bg-fratGold hover:bg-amber-500 text-slate-900 font-bold px-6 py-3.5 rounded-xl shadow transition-colors inline-block text-sm">
+                        <i class="fas fa-headset mr-2"></i> Contactar Secretaría
+                    </a>
+                </div>
+            </div>
+
+            <!-- Servicios Principales de Secretaría -->
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-blue-50 text-fratBlue rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Matrícula y Registro</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Inscripción formal de alumnos de nuevo ingreso y reingreso en todas las modalidades y jornadas educativas.</p>
+                    <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                        <li class="flex items-center"><i class="fas fa-check text-fratBlue mr-2"></i> Certificado de conducta</li>
+                        <li class="flex items-center"><i class="fas fa-check text-fratBlue mr-2"></i> Partida de nacimiento original</li>
+                        <li class="flex items-center"><i class="fas fa-check text-fratBlue mr-2"></i> Certificación de estudios previos</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-amber-50 text-fratGold rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Certificaciones de Estudio</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Expedición oficial de certificación de calificaciones parciales o finales para trámites universitarios o traslados.</p>
+                    <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                        <li class="flex items-center"><i class="fas fa-check text-fratGold mr-2"></i> Historial de notas completas</li>
+                        <li class="flex items-center"><i class="fas fa-check text-fratGold mr-2"></i> Firma y sello de la Dirección</li>
+                        <li class="flex items-center"><i class="fas fa-check text-fratGold mr-2"></i> Entrega en 3 a 5 días hábiles</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Títulos y Constancias</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Tramitación de títulos de graduación, constancias de egresados, conducta y aprobación de año lectivo.</p>
+                    <ul class="text-xs text-slate-500 space-y-1.5 border-t border-slate-100 pt-3">
+                        <li class="flex items-center"><i class="fas fa-check text-indigo-600 mr-2"></i> Verificación de expediente</li>
+                        <li class="flex items-center"><i class="fas fa-check text-indigo-600 mr-2"></i> Registro ante la Departamental</li>
+                        <li class="flex items-center"><i class="fas fa-check text-indigo-600 mr-2"></i> Emisión de autenticaciones</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Requisitos de Trámites Frecuentes -->
+            <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-sm border border-slate-200">
+                <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center">
+                    <i class="fas fa-clipboard-list text-fratBlue mr-3"></i> Guía Rápida de Requisitos
+                </h3>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <h4 class="font-bold text-slate-900 mb-3 flex items-center"><i class="fas fa-user-plus text-fratBlue mr-2"></i> Traslados e Ingresos Especiales</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">Presentar copia de DNI del encargado, certificación de notas cancelada del instituto de origen y constancia de conducta con firma autenticada.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <h4 class="font-bold text-slate-900 mb-3 flex items-center"><i class="fas fa-certificate text-fratGold mr-2"></i> Duplicado de Certificados o Títulos</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">Solicitud por escrito dirigida a Secretaría, fotocopia de la tarjeta de identidad y recibo de pago correspondiente de la tasa administrativa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visor Modal para pantalla completa (Carrusel) -->
+        <div id="heroViewer" aria-hidden="true" onclick="heroViewerClick(event)">
+            <button class="hero-v-close" onclick="closeHeroViewer()" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+            <button class="hero-v-prev" onclick="heroPrev(event)" aria-label="Imagen anterior"><i class="fas fa-chevron-left"></i></button>
+            <img id="heroViewerImg" src="" alt="Imagen ampliada">
+            <button class="hero-v-next" onclick="heroNext(event)" aria-label="Imagen siguiente"><i class="fas fa-chevron-right"></i></button>
+            <div class="hero-v-hint">← → para cambiar · clic izquierdo/derecho sobre la imagen · Esc para cerrar</div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contacto" class="bg-slate-900 text-white pt-16 pb-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div class="space-y-4 md:col-span-1">
+                <div class="flex items-center space-x-3">
+                    <img src="imagenes/imagen1.jpg" alt="Logo Footer" class="w-10 h-10 rounded-xl object-cover">
+                    <span class="font-bold text-lg">La Fraternidad</span>
+                </div>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Institución educativa pública comprometida con el desarrollo de la juventud olanchana en Juticalpa, Olancho.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-base mb-4 text-fratGold">Enlaces Rápidos</h4>
+                <ul class="space-y-2.5 text-sm text-slate-400">
+                    <li><a href="#" onclick="showHomeView(); return false;" class="hover:text-white transition-colors">Inicio</a></li>
+                    <li><a href="#" onclick="switchView('quienes-somos'); return false;" class="hover:text-white transition-colors">Quiénes Somos</a></li>
+                    <li><a href="#" onclick="switchView('oferta-academica'); return false;" class="hover:text-white transition-colors">Oferta Académica</a></li>
+                    <li><a href="#" onclick="switchView('secretaria'); return false;" class="hover:text-white transition-colors">Secretaría</a></li>
+                    <li><a href="#admisiones" onclick="showHomeView(); return false;" class="hover:text-white transition-colors">Admisiones</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-base mb-4 text-fratGold">Jornadas</h4>
+                <ul class="space-y-2.5 text-sm text-slate-400">
+                    <li><a href="#" onclick="switchView('oferta-academica'); filterShift('matutina'); return false;" class="hover:text-white transition-colors">Jornada Matutina</a></li>
+                    <li><a href="#" onclick="switchView('oferta-academica'); filterShift('vespertina'); return false;" class="hover:text-white transition-colors">Jornada Vespertina</a></li>
+                    <li><a href="#" onclick="switchView('oferta-academica'); filterShift('nocturna'); return false;" class="hover:text-white transition-colors">Jornada Nocturna</a></li>
+                    <li><a href="#" onclick="switchView('oferta-academica'); filterShift('isemed'); return false;" class="hover:text-white transition-colors">ISEMED</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-base mb-4 text-fratGold">Contacto Directo</h4>
+                <ul class="space-y-3 text-sm text-slate-400">
+                    <li><i class="fas fa-map-marker-alt text-fratGold mr-2"></i> Barrio Calona, Juticalpa, Olancho</li>
+                    <li><i class="fas fa-phone-alt text-fratGold mr-2"></i> (504) 2785-0000</li>
+                    <li><i class="fas fa-envelope text-fratGold mr-2"></i> contacto@lafraternidad.edu.hn</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+            &copy; 2026 Instituto Departamental La Fraternidad • Juticalpa, Olancho, Honduras. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- Study Plan Modal -->
+    <div id="study-plan-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative transform transition-all scale-95 opacity-0" id="modal-content-box">
+            <button onclick="closeStudyPlan()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center transition-colors">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <span id="modal-shift" class="text-xs font-bold uppercase tracking-wider bg-blue-100 text-fratBlue px-3 py-1 rounded-full">Jornada</span>
+            <h3 id="modal-title" class="text-2xl font-black text-slate-900 mt-3 mb-1">Nombre de la Carrera</h3>
+            <p id="modal-duration" class="text-sm font-semibold text-slate-500 mb-6">Duración: 3 Años</p>
+            <div class="space-y-3">
+                <h4 class="text-sm font-bold text-slate-700 uppercase tracking-wider">Asignaturas Principales del Plan de Estudio:</h4>
+                <ul id="modal-subjects" class="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-200 max-h-60 overflow-y-auto text-sm text-slate-700">
+                    <!-- Dinámico -->
+                </ul>
+            </div>
+            <div class="mt-8">
+                <button onclick="closeStudyPlan()" class="w-full bg-fratBlue text-white font-bold py-3 rounded-xl hover:bg-fratBlueDark transition-colors">
+                    Cerrar Plan de Estudio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Cambiar entre vistas principales (Inicio, Quiénes Somos, Oferta Académica, Secretaría)
+        function switchView(viewName) {
+            const views = document.querySelectorAll('.view-container');
+            views.forEach(v => v.classList.add('hidden'));
+            const targetView = document.getElementById('view-' + viewName);
+            if (targetView) {
+                targetView.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('text-fratBlue', 'bg-slate-100'));
+            if (viewName === 'quienes-somos') {
+                const el = document.getElementById('link-quienes');
+                if (el) el.classList.add('text-fratBlue', 'bg-slate-100');
+            } else if (viewName === 'oferta-academica') {
+                const el = document.getElementById('link-oferta');
+                if (el) el.classList.add('text-fratBlue', 'bg-slate-100');
+            } else if (viewName === 'secretaria') {
+                const el = document.getElementById('link-secretaria');
+                if (el) el.classList.add('text-fratBlue', 'bg-slate-100');
+            }
+        }
+
+        function showHomeView() {
+            const views = document.querySelectorAll('.view-container');
+            views.forEach(v => v.classList.add('hidden'));
+            document.getElementById('view-home').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('text-fratBlue', 'bg-slate-100'));
+            document.getElementById('link-home').classList.add('text-fratBlue', 'bg-slate-100');
+        }
+
+        // Toggle menú móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars text-2xl';
+            } else {
+                icon.className = 'fas fa-times text-2xl';
+            }
+        }
+
+        // Pestañas de Quiénes Somos
+        function switchQuienesTab(tabName) {
+            document.querySelectorAll('.quienes-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.quienes-tab-btn').forEach(b => {
+                b.className = 'quienes-tab-btn px-6 py-3 rounded-xl font-bold text-sm transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200';
+            });
+            document.getElementById('content-tab-' + tabName).classList.remove('hidden');
+            const btn = document.getElementById('btn-tab-' + tabName);
+            btn.className = 'quienes-tab-btn px-6 py-3 rounded-xl font-bold text-sm transition-all bg-fratBlue text-white shadow';
+        }
+
+        // Filtro de Jornadas en Oferta Académica
+        function filterShift(shiftName) {
+            document.querySelectorAll('.shift-pane').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.shift-tab-btn').forEach(b => {
+                b.className = 'shift-tab-btn px-5 py-3 rounded-xl font-bold text-sm transition-all bg-white text-slate-700 hover:bg-slate-100 border border-slate-200';
+            });
+            const pane = document.getElementById('shift-content-' + shiftName);
+            if (pane) pane.classList.remove('hidden');
+            const btn = document.getElementById('shift-btn-' + shiftName);
+            if (btn) btn.className = 'shift-tab-btn px-5 py-3 rounded-xl font-bold text-sm transition-all bg-fratBlue text-white shadow';
+        }
+
+        // Modal de Plan de Estudios
+        function openStudyPlan(careerName, shiftName, subjects, duration) {
+            document.getElementById('modal-title').innerText = careerName;
+            document.getElementById('modal-shift').innerText = shiftName;
+            document.getElementById('modal-duration').innerText = 'Duración / Modalidad: ' + duration;
+            const listEl = document.getElementById('modal-subjects');
+            listEl.innerHTML = '';
+            subjects.forEach(sub => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center space-x-2';
+                li.innerHTML = '<i class="fas fa-check-circle text-fratBlue"></i><span>' + sub + '</span>';
+                listEl.appendChild(li);
+            });
+            const modal = document.getElementById('study-plan-modal');
+            const box = document.getElementById('modal-content-box');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                box.classList.remove('scale-95', 'opacity-0');
+                box.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeStudyPlan() {
+            const modal = document.getElementById('study-plan-modal');
+            const box = document.getElementById('modal-content-box');
+            box.classList.remove('scale-100', 'opacity-100');
+            box.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        // Carrusel del Hero y Visor
+        const heroSlides = [...document.querySelectorAll('.hero-slide')];
+        let heroIndex = 0;
+        const heroViewer = document.getElementById('heroViewer');
+        const heroViewerImg = document.getElementById('heroViewerImg');
+
+        function setHero(i) {
+            heroIndex = (i + heroSlides.length) % heroSlides.length;
+            heroSlides.forEach((s, n) => s.classList.toggle('active', n === heroIndex));
+            if (heroViewer.classList.contains('open')) heroViewerImg.src = heroSlides[heroIndex].src;
+        }
+
+        setInterval(() => setHero(heroIndex + 1), 5000);
+
+        function openHeroViewer() {
+            heroViewerImg.src = heroSlides[heroIndex].src;
+            heroViewer.classList.add('open');
+            heroViewer.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeHeroViewer() {
+            heroViewer.classList.remove('open');
+            heroViewer.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        function heroPrev(e) {
+            e.stopPropagation();
+            setHero(heroIndex - 1);
+        }
+
+        function heroNext(e) {
+            e.stopPropagation();
+            setHero(heroIndex + 1);
+        }
+
+        function heroViewerClick(e) {
+            if (e.target !== heroViewerImg && e.target === heroViewer) return closeHeroViewer();
+            if (e.target === heroViewerImg) {
+                if (e.button === 2) return heroPrev(e);
+                if (e.button === 0) return e.clientX < innerWidth / 2 ? heroPrev(e) : heroNext(e);
+            }
+        }
+
+        heroViewer.addEventListener('contextmenu', e => {
+            if (e.target === heroViewerImg) {
+                e.preventDefault();
+                heroPrev(e);
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if (!heroViewer.classList.contains('open')) return;
+            if (e.key === 'Escape') closeHeroViewer();
+            if (e.key === 'ArrowLeft') heroPrev(e);
+            if (e.key === 'ArrowRight') heroNext(e);
+        });
+    </script>
+</body>
+</html>

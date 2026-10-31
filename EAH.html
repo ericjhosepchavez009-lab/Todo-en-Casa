@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Todo en casa | Catálogo con carrito y carruseles</title>
+<link rel="icon" href="imagenes/log.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<nav class="navbar">
+<a href="#" class="brand">
+<div class="logo">
+    <img src="imagenes/log.jpg" alt="Logo Todo en Casa" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-house\'></i>'">
+</div>
+<div>
+    <h1>Todo en casa</h1>
+    <span>Postres · Regalos · Detalles</span>
+</div>
+</a>
+
+<div class="header-socials">
+    <a href="https://www.facebook.com/profile.php?id=100089708846763" target="_blank" class="social-icon-btn" title="Síguenos en Facebook" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+    </a>
+</div>
+</nav>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+<div>
+<div class="badge"><i class="fa-solid fa-sparkles"></i> Todo en casa</div>
+<h2>Todo lo que buscas, <span>en un solo lugar.</span></h2>
+<p>
+    Explora nuestro catálogo de postres, regalos y detalles especiales. 
+    Arma tu pedido agregando items al carrito y envíanos la orden directa a WhatsApp.
+</p>
+<div class="hero-buttons">
+<a href="#catalogo" class="btn btn-primary"><i class="fa-solid fa-store"></i> Ver catálogo</a>
+<button type="button" onclick="confirmWhatsAppContact()" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> Escríbenos</button>
+</div>
+</div>
+
+<div class="hero-carousel" id="heroCarousel">
+    <div class="carousel-slide active" style="background-image: url('imagenes/donas1.jpeg');">
+        <div class="hero-image-text">
+            <small>Repostería artesanal</small>
+            <h3>Donitas preparadas</h3>
+        </div>
+    </div>
+    <div class="carousel-slide" style="background-image: url('imagenes/roles1.jpeg');">
+        <div class="hero-image-text">
+            <small>Horneado con amor</small>
+            <h3>Roles de canela</h3>
+        </div>
+    </div>
+    <div class="carousel-slide" style="background-image: url('imagenes/regalo1.jpeg');">
+        <div class="hero-image-text">
+            <small>Ocasiones especiales</small>
+            <h3>Detalles y regalos</h3>
+        </div>
+    </div>
+
+    <div class="carousel-dots">
+        <button type="button" class="dot active" onclick="setSlide(0)" aria-label="Diapositiva 1"></button>
+        <button type="button" class="dot" onclick="setSlide(1)" aria-label="Diapositiva 2"></button>
+        <button type="button" class="dot" onclick="setSlide(2)" aria-label="Diapositiva 3"></button>
+    </div>
+</div>
+</section>
+
+<section class="section" id="catalogo">
+<div class="section-title">
+<small>Nuestros productos</small>
+<h2>Catálogo</h2>
+</div>
+
+<div class="main-catalog">
+    <div class="catalog-card" id="card-donitas" onclick="handleCardClick('donitas', this)">
+        <div class="card-carousel" data-type="donitas">
+            <div class="card-slide active" style="background-image: url('imagenes/donas1.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/donas2.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/donas3.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/donas4.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/donas5.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/donas6.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/donas7.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/donas8.jpeg');"></div>
+            
+            <button type="button" class="zoom-btn" onclick="openLightboxFromCard('donitas', event)" aria-label="Ampliar imagen"><i class="fa-solid fa-expand"></i></button>
+            <span class="hold-badge"><i class="fa-solid fa-hand"></i> Mantén presionado</span>
+        </div>
+        <div class="catalog-card-body">
+            <h3>Donitas</h3>
+            <p>Sencillas o preparadas con toppings especiales.</p>
+        </div>
+    </div>
+
+    <div class="catalog-card" id="card-roles" onclick="handleCardClick('roles', this)">
+        <div class="card-carousel" data-type="roles">
+            <div class="card-slide active" style="background-image: url('imagenes/roles1.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/roles2.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/roles3.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/roles4.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/roles5.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/roles6.jpeg');"></div>
+            
+            <button type="button" class="zoom-btn" onclick="openLightboxFromCard('roles', event)" aria-label="Ampliar imagen"><i class="fa-solid fa-expand"></i></button>
+            <span class="hold-badge"><i class="fa-solid fa-hand"></i> Mantén presionado</span>
+        </div>
+        <div class="catalog-card-body">
+            <h3>Roles de canela</h3>
+            <p>Recién horneados, por unidad o en bandeja.</p>
+        </div>
+    </div>
+
+    <div class="catalog-card" id="card-regalos" onclick="handleCardClick('regalos', this)">
+        <div class="card-carousel" data-type="regalos">
+            <div class="card-slide active" style="background-image: url('imagenes/regalo1.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/regalo2.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/regalo3.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/regalo4.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/regalo5.jpeg');"></div>
+            <div class="card-slide" style="background-image: url('imagenes/regalo6.jpeg');"></div>
+            
+            <button type="button" class="zoom-btn" onclick="openLightboxFromCard('regalos', event)" aria-label="Ampliar imagen"><i class="fa-solid fa-expand"></i></button>
+            <span class="hold-badge"><i class="fa-solid fa-hand"></i> Mantén presionado</span>
+        </div>
+        <div class="catalog-card-body">
+            <h3>Regalos</h3>
+            <p>Detalles e ideas especiales para sorprender.</p>
+        </div>
+    </div>
+</div>
+
+<div id="dynamicPanel" class="dynamic-panel"></div>
+</section>
+</main>
+
+<footer>
+<div class="footer">
+<div>
+<h3>Todo en casa</h3>
+<p>Postres, regalos y detalles especiales para hacer cada momento un poco más especial.</p>
+</div>
+<div>
+<strong>Contacto directo</strong>
+<div class="footer-links">
+<span><i class="fa-solid fa-phone"></i> +504 9485 4119</span>
+<span><i class="fa-solid fa-location-dot"></i> Juticalpa, Honduras (B. buenos aires)</span>
+<a href="https://www.facebook.com/profile.php?id=100089708846763" target="_blank" style="color: var(--accent-light); text-decoration: underline; margin-top: 5px;">
+    <i class="fa-brands fa-facebook"></i> Síguenos en Facebook
+</a>
+</div>
+</div>
+</div>
+<div class="copyright">&copy; 2026 Todo en casa · Todos los derechos reservados</div>
+</footer>
+
+<button type="button" class="cart-floating-btn" onclick="toggleCartModal(true)" aria-label="Ver carrito de compras">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>Ver carrito</span>
+    <div class="cart-badge" id="cartBadge">0</div>
+</button>
+
+<div class="cart-modal-overlay" id="cartOverlay" onclick="toggleCartModal(false)"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Carrito de compras">
+    <div class="cart-header">
+        <h3>Tu carrito</h3>
+        <button type="button" class="close-cart" onclick="toggleCartModal(false)" aria-label="Cerrar carrito"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-notice">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Es posible que algunos productos o toppings no estén disponibles.</span>
+    </div>
+    <div class="cart-body" id="cartBody"></div>
+    <div class="cart-footer">
+        <!-- Pregunta de Delivery (Sí / No) -->
+        <div class="cart-delivery-box" style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-color);">
+                <i class="fa-solid fa-motorcycle" style="color: var(--accent-color);"></i> ¿Necesita delivery? (Obligatorio):
+            </label>
+            <div style="display: flex; gap: 20px;">
+                <label style="font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                    <input type="radio" name="needDelivery" value="Sí"> Sí
+                </label>
+                <label style="font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                    <input type="radio" name="needDelivery" value="No"> No
+                </label>
+            </div>
+        </div>
+
+        <!-- Campo obligatorio para la dirección -->
+        <div class="cart-address-box" style="margin-bottom: 12px;">
+            <label for="clientAddress" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: var(--text-color);">
+                <i class="fa-solid fa-location-dot" style="color: var(--accent-color);"></i> Dirección de entrega (Obligatorio):
+            </label>
+            <input type="text" id="clientAddress" placeholder="Ej. Barrio Centro, frente a la plaza..." required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none;">
+        </div>
+
+        <div class="cart-total-row">
+            <span>Total:</span>
+            <span id="cartTotal">L 0</span>
+        </div>
+        <button type="button" class="btn btn-whatsapp" style="width: 100%; justify-content: center; padding: 15px;" onclick="sendWhatsAppOrder()">
+            <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Pedir por WhatsApp
+        </button>
+    </div>
+</aside>
+
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+        <button type="button" class="lightbox-close" onclick="closeLightbox()" aria-label="Cerrar imagen"><i class="fa-solid fa-xmark"></i></button>
+        <img id="lightboxImg" src="" alt="Imagen ampliada">
+    </div>
+</div>
+
+<div class="category-modal-overlay" id="categoryModal" onclick="closeCategoryModal()">
+    <div class="category-modal" onclick="event.stopPropagation()">
+        <div class="category-modal-header">
+            <h3 id="categoryModalTitle">Galería completa</h3>
+            <button type="button" class="close-cart" onclick="closeCategoryModal()" aria-label="Cerrar galería"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="category-gallery" id="categoryGallery"></div>
+    </div>
+</div>
+
+<script>
+const categoryImages = {
+    donitas: [
+        "imagenes/donas1.jpeg",
+        "imagenes/donas2.jpeg",
+        "imagenes/donas3.jpeg",
+        "imagenes/donas4.jpeg",
+        "imagenes/donas5.jpeg",
+        "imagenes/donas6.jpeg",
+        "imagenes/donas7.jpeg",
+        "imagenes/donas8.jpeg"
+    ],
+    roles: [
+        "imagenes/roles1.jpeg",
+        "imagenes/roles2.jpeg",
+        "imagenes/roles3.jpeg",
+        "imagenes/roles4.jpeg",
+        "imagenes/roles5.jpeg",
+        "imagenes/roles6.jpeg"
+    ],
+    regalos: [
+        "imagenes/regalo1.jpeg",
+        "imagenes/regalo2.jpeg",
+        "imagenes/regalo3.jpeg",
+        "imagenes/regalo4.jpeg",
+        "imagenes/regalo5.jpeg",
+        "imagenes/regalo6.jpeg"
+    ]
+};
+
+const PHONE_NUMBER = "94854119";
+
+function confirmWhatsAppContact() {
+    if (confirm("¿Estás seguro de que deseas ir al chat de WhatsApp para comunicarte con nosotros?")) {
+        window.open(`https://wa.me/${PHONE_NUMBER}`, "_blank");
+    }
+}
+
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel-slide');
+const dots = document.querySelectorAll('.dot');
+
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        if (dots[i]) dots[i].classList.toggle('active', i === index);
+    });
+    currentSlide = index;
+}
+
+setInterval(() => {
+    let nextIndex = (currentSlide + 1) % slides.length;
+    showSlide(nextIndex);
+}, 3000);
+
+function setSlide(index) { showSlide(index); }
+
+setInterval(() => {
+    document.querySelectorAll('.card-carousel').forEach(carousel => {
+        const cardSlides = carousel.querySelectorAll('.card-slide');
+        let activeIdx = Array.from(cardSlides).findIndex(s => s.classList.contains('active'));
+        if (activeIdx !== -1) {
+            cardSlides[activeIdx].classList.remove('active');
+            let nextIdx = (activeIdx + 1) % cardSlides.length;
+            cardSlides[nextIdx].classList.add('active');
+        }
+    });
+}, 3000);
+
+function openLightbox(imgSrc) {
+    document.getElementById('lightboxImg').src = imgSrc;
+    document.getElementById('lightbox').classList.add('active');
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+}
+
+function openLightboxFromCard(type, event) {
+    event.stopPropagation();
+    const activeSlide = document.querySelector(`.card-carousel[data-type="${type}"] .card-slide.active`);
+    if (activeSlide) {
+        const bgUrl = activeSlide.style.backgroundImage.slice(5, -2).replace(/['"]/g, '');
+        openLightbox(bgUrl);
+    }
+}
+
+let pressTimer = null;
+let isLongPress = false;
+
+function setupLongPress() {
+    document.querySelectorAll('.catalog-card').forEach(card => {
+        const type = card.id.replace('card-', '');
+
+        const start = () => {
+            isLongPress = false;
+            pressTimer = setTimeout(() => {
+                isLongPress = true;
+                openCategoryModal(type);
+            }, 600);
+        };
+
+        const cancel = () => { clearTimeout(pressTimer); };
+
+        card.addEventListener('mousedown', start);
+        card.addEventListener('touchstart', start, {passive: true});
+        card.addEventListener('mouseup', cancel);
+        card.addEventListener('mouseleave', cancel);
+        card.addEventListener('touchend', cancel);
+    });
+}
+
+function handleCardClick(type, element) {
+    if (isLongPress) return;
+    openSection(type, element);
+}
+
+function openCategoryModal(type) {
+    const titles = { donitas: "Galería de donitas", roles: "Galería de roles de canela", regalos: "Galería de regalos" };
+    document.getElementById('categoryModalTitle').innerText = titles[type] || "Galería completa";
+    
+    const gallery = document.getElementById('categoryGallery');
+    gallery.innerHTML = categoryImages[type].map(img => `
+        <div class="gallery-item" onclick="openLightbox('${img}')">
+            <img src="${img}" alt="Producto de catálogo">
+        </div>
+    `).join('');
+
+    document.getElementById('categoryModal').classList.add('active');
+}
+
+function closeCategoryModal() {
+    document.getElementById('categoryModal').classList.remove('active');
+}
+
+window.addEventListener('DOMContentLoaded', setupLongPress);
+
+let cart = [];
+
+function toggleCartModal(show) {
+    document.getElementById('cartOverlay').classList.toggle('active', show);
+    document.getElementById('cartDrawer').classList.toggle('active', show);
+}
+
+function addToCart(item) {
+    cart.push(item);
+    renderCart();
+    toggleCartModal(true);
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCart();
+}
+
+function renderCart() {
+    const cartBody = document.getElementById('cartBody');
+    const cartBadge = document.getElementById('cartBadge');
+    const cartTotal = document.getElementById('cartTotal');
+
+    cartBadge.innerText = cart.length;
+
+    if (cart.length === 0) {
+        cartBody.innerHTML = `
+            <div class="cart-empty">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <p>Tu carrito está vacío.<br>¡Añade algo del catálogo!</p>
+            </div>
+        `;
+        cartTotal.innerText = "L 0";
+        return;
+    }
+
+    let total = 0;
+    cartBody.innerHTML = cart.map((item, index) => {
+        total += item.price;
+        return `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <h5>${item.title}</h5>
+                    <small>${item.details}</small>
+                    <div class="price">L ${item.price}</div>
+                </div>
+                <div class="cart-item-actions">
+                    <button type="button" class="remove-btn" onclick="removeFromCart(${index})" aria-label="Eliminar producto">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    cartTotal.innerText = `L ${total}`;
+}
+
+function sendWhatsAppOrder() {
+    if (cart.length === 0) {
+        alert("Tu carrito está vacío. Agrega productos antes de realizar tu pedido.");
+        return;
+    }
+
+    // Validación de la opción de delivery obligatoria
+    const deliverySelected = document.querySelector('input[name="needDelivery"]:checked');
+    if (!deliverySelected) {
+        alert("Por favor, selecciona si necesitas delivery (Sí o No).");
+        return;
+    }
+    const needDelivery = deliverySelected.value;
+
+    // Validación de la dirección obligatoria
+    const addressInput = document.getElementById('clientAddress');
+    const clientAddress = addressInput.value.trim();
+
+    if (clientAddress === "") {
+        alert("Por favor, ingresa tu dirección de entrega antes de pedir por WhatsApp.");
+        addressInput.focus();
+        return;
+    }
+
+    let message = "¡Hola! Vengo del sitio web y me gustaría realizar el siguiente pedido:\n\n";
+    let grandTotal = 0;
+
+    cart.forEach((item, i) => {
+        message += `*${i + 1}. ${item.title}*\n`;
+        message += `   • Detalle: ${item.details}\n`;
+        message += `   • Precio: L ${item.price}\n\n`;
+        grandTotal += item.price;
+    });
+
+    message += `------------------------------\n`;
+    message += `*¿NECESITA DELIVERY?:* ${needDelivery}\n`;
+    message += `*DIRECCIÓN DE ENTREGA:*\n${clientAddress}\n`;
+    message += `------------------------------\n`;
+    message += `*TOTAL A PAGAR: L ${grandTotal}*\n`;
+    message += `------------------------------\n\n`;
+    message += `Quedo a la espera de su confirmación. ¡Muchas gracias!`;
+
+    window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+}
+
+function openSection(type, element) {
+    document.querySelectorAll('.catalog-card').forEach(card => card.classList.remove('active'));
+    element.classList.add('active');
+
+    const panel = document.getElementById('dynamicPanel');
+    panel.classList.add('active');
+
+    if(type === 'donitas') renderDonutsPanel();
+    else if(type === 'roles') renderRolesPanel();
+    else if(type === 'regalos') renderGiftsPanel();
+}
+
+function renderDonutsPanel() {
+    const panel = document.getElementById('dynamicPanel');
+    panel.innerHTML = `
+        <div class="panel-header">
+            <div class="panel-header-img-wrapper" onclick="openLightbox('${categoryImages.donitas[0]}')">
+                <img src="${categoryImages.donitas[0]}" alt="Donitas">
+            </div>
+            <div>
+                <h3>Personaliza tus donitas</h3>
+                <p style="color:var(--muted); font-size:13px;">Sencillas o en bandejas con toppings.</p>
+            </div>
+        </div>
+
+        <div class="option-group">
+            <h4>1. Selecciona la cantidad o presentación:</h4>
+            <div class="radio-grid">
+                <div class="custom-radio">
+                    <input type="radio" id="d0" name="donutQty" value="3" data-type="sencillas" data-name="Donitas sencillas" checked onchange="toggleDonutType()">
+                    <label for="d0"><strong>Donitas sencillas</strong><span>L 3 c/u (sin nada)</span></label>
+                </div>
+                <div class="custom-radio">
+                    <input type="radio" id="d6" name="donutQty" value="75" data-type="bandeja" data-name="Bandeja de 6 donitas" onchange="toggleDonutType()">
+                    <label for="d6"><strong>Bandeja de 6</strong><span>L 75</span></label>
+                </div>
+                <div class="custom-radio">
+                    <input type="radio" id="d12" name="donutQty" value="150" data-type="bandeja" data-name="Bandeja de 12 donitas" onchange="toggleDonutType()">
+                    <label for="d12"><strong>Bandeja de 12</strong><span>L 150</span></label>
+                </div>
+                <div class="custom-radio">
+                    <input type="radio" id="d18" name="donutQty" value="230" data-type="bandeja" data-name="Bandeja de 18 donitas" onchange="toggleDonutType()">
+                    <label for="d18"><strong>Bandeja de 18</strong><span>L 230</span></label>
+                </div>
+                <div class="custom-radio">
+                    <input type="radio" id="d24" name="donutQty" value="300" data-type="bandeja" data-name="Bandeja de 24 donitas" onchange="toggleDonutType()">
+                    <label for="d24"><strong>Bandeja de 24</strong><span>L 300</span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-group" id="simpleDonutsGroup">
+            <h4>Cantidad de donitas sencillas:</h4>
+            <div class="number-input-box">
+                <input type="number" id="simpleDonutsCount" value="1" min="1" max="100" oninput="updateDonutPrice()">
+                <span>Unidades (L 3 c/u)</span>
+            </div>
+        </div>
+
+        <div class="option-group" id="toppingsDonutsGroup" style="display:none;">
+            <h4>2. Selecciona tus toppings (3 incluidos gratis, +L 5 cada extra):</h4>
+            <div class="toppings-grid">
+                <label class="topping-checkbox">
+                    <input type="checkbox" value="Leche condensada" checked disabled class="donut-topping">
+                    <span>Leche condensada (base)</span>
+                </label>
+                <label class="topping-checkbox">
+                    <input type="checkbox" value="Mínimo maduro" class="donut-topping" onchange="updateDonutPrice()">
+                    <span>Mínimo maduro</span>
+                </label>
+                <label class="topping-checkbox">
+                    <input type="checkbox" value="Galleta Oreo" class="donut-topping" onchange="updateDonutPrice()">
+                    <span>Galleta Oreo</span>
+                </label>
+                <label class="topping-checkbox">
+                    <input type="checkbox" value="Besitos" class="donut-topping" onchange="updateDonutPrice()">
+                    <span>Besitos</span>
+                </label>
+                <label class="topping-checkbox">
+                    <input type="checkbox" value="Fresas" class="donut-topping" onchange="updateDonutPrice()">
+                    <span>Fresas</span>
+                </label>
+                <label class="topping-checkbox">
+                    <input type="checkbox" value="Caramelo" class="donut-topping" onchange="updateDonutPrice()">
+                    <span>Caramelo</span>
+                </label>
+                <label class="topping-checkbox">
+                    <input type="checkbox" value="Mermelada" class="donut-topping" onchange="updateDonutPrice()">
+                    <span>Mermelada</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="summary-box">
+            <div class="summary-info">
+                <span class="total-price" id="donutTotalPrice">Total: L 3</span>
+                <small id="donutToppingSummary">Donitas sencillas sin nada</small>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addDonutsToCart()"><i class="fa-solid fa-plus"></i> Agregar al carrito</button>
+        </div>
+    `;
+    toggleDonutType();
+}
+
+function toggleDonutType() {
+    const selectedRadio = document.querySelector('input[name="donutQty"]:checked');
+    const type = selectedRadio.getAttribute('data-type');
+    
+    document.getElementById('simpleDonutsGroup').style.display = type === 'sencillas' ? 'block' : 'none';
+    document.getElementById('toppingsDonutsGroup').style.display = type === 'bandeja' ? 'block' : 'none';
+    
+    updateDonutPrice();
+}
+
+function updateDonutPrice() {
+    const selectedRadio = document.querySelector('input[name="donutQty"]:checked');
+    const type = selectedRadio.getAttribute('data-type');
+    
+    if(type === 'sencillas') {
+        let count = parseInt(document.getElementById('simpleDonutsCount').value) || 1;
+        if(count < 1) count = 1;
+        document.getElementById('donutTotalPrice').innerText = `Total: L ${count * 3}`;
+        document.getElementById('donutToppingSummary').innerText = `${count} donitas sencillas (sin nada)`;
+    } else {
+        const basePrice = parseInt(selectedRadio.value);
+        const checkboxes = document.querySelectorAll('.donut-topping:checked');
+        const extraToppings = Math.max(0, checkboxes.length - 3);
+        const totalPrice = basePrice + (extraToppings * 5);
+
+        document.getElementById('donutTotalPrice').innerText = `Total: L ${totalPrice}`;
+        document.getElementById('donutToppingSummary').innerText = `${checkboxes.length} toppings (${extraToppings > 0 ? `+L ${extraToppings * 5} extra` : 'sin recargo'})`;
+    }
+}
+
+function addDonutsToCart() {
+    const selectedRadio = document.querySelector('input[name="donutQty"]:checked');
+    const type = selectedRadio.getAttribute('data-type');
+    const name = selectedRadio.getAttribute('data-name');
+
+    if(type === 'sencillas') {
+        const count = parseInt(document.getElementById('simpleDonutsCount').value) || 1;
+        addToCart({
+            title: `Donitas sencillas (${count} unidades)`,
+            details: "Sin toppings / tradicionales",
+            price: count * 3
+        });
+    } else {
+        const basePrice = parseInt(selectedRadio.value);
+        const checkboxes = document.querySelectorAll('.donut-topping:checked');
+        let toppings = Array.from(checkboxes).map(cb => cb.value);
+        const extraToppings = Math.max(0, toppings.length - 3);
+        const totalPrice = basePrice + (extraToppings * 5);
+
+        addToCart({
+            title: name,
+            details: `Toppings: ${toppings.join(', ')}`,
+            price: totalPrice
+        });
+    }
+}
+
+function renderRolesPanel() {
+    const panel = document.getElementById('dynamicPanel');
+    panel.innerHTML = `
+        <div class="panel-header">
+            <div class="panel-header-img-wrapper" onclick="openLightbox('${categoryImages.roles[0]}')">
+                <img src="${categoryImages.roles[0]}" alt="Roles de canela">
+            </div>
+            <div>
+                <h3>Roles de canela</h3>
+                <p style="color:var(--muted); font-size:13px;">Elige tu opción y personalízala.</p>
+            </div>
+        </div>
+
+        <div class="option-group">
+            <h4>1. Presentación:</h4>
+            <div class="radio-grid">
+                <div class="custom-radio">
+                    <input type="radio" id="r1" name="roleQty" value="60" data-name="Rol de canela (unidad)" checked onchange="updateRolePrice()">
+                    <label for="r1"><strong>Unidad</strong><span>L 60</span></label>
+                </div>
+                <div class="custom-radio">
+                    <input type="radio" id="r4" name="roleQty" value="250" data-name="Bandeja de 4 roles de canela" onchange="updateRolePrice()">
+                    <label for="r4"><strong>Bandeja de 4</strong><span>L 250</span></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-group">
+            <h4>2. Selecciona la base líquida (obligatoria):</h4>
+            <div class="toppings-grid">
+                <label class="topping-checkbox"><input type="radio" name="roleBase" value="Leche condensada" checked><span>Leche condensada</span></label>
+                <label class="topping-checkbox"><input type="radio" name="roleBase" value="Glaseado"><span>Glaseado</span></label>
+                <label class="topping-checkbox"><input type="radio" name="roleBase" value="Jalea"><span>Jalea</span></label>
+            </div>
+        </div>
+
+        <div class="option-group">
+            <h4>3. Toppings adicionales (3 incluidos gratis con tu base, +L 5 extra):</h4>
+            <div class="toppings-grid">
+                <label class="topping-checkbox"><input type="checkbox" value="Mínimo maduro" class="role-topping" onchange="updateRolePrice()"><span>Mínimo maduro</span></label>
+                <label class="topping-checkbox"><input type="checkbox" value="Galleta oreo" class="role-topping" onchange="updateRolePrice()"><span>Galleta oreo</span></label>
+                <label class="topping-checkbox"><input type="checkbox" value="Besitos" class="role-topping" onchange="updateRolePrice()"><span>Besitos</span></label>
+                <label class="topping-checkbox"><input type="checkbox" value="Fresas" class="role-topping" onchange="updateRolePrice()"><span>Fresas</span></label>
+                <label class="topping-checkbox"><input type="checkbox" value="Caramelo" class="role-topping" onchange="updateRolePrice()"><span>Caramelo</span></label>
+                <label class="topping-checkbox"><input type="checkbox" value="Mermelada" class="role-topping" onchange="updateRolePrice()"><span>Mermelada</span></label>
+            </div>
+        </div>
+
+        <div class="summary-box">
+            <div class="summary-info">
+                <span class="total-price" id="roleTotalPrice">Total: L 60</span>
+                <small id="roleSummary">Base incluida</small>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addRolesToCart()"><i class="fa-solid fa-plus"></i> Agregar al carrito</button>
+        </div>
+    `;
+    updateRolePrice();
+}
+
+function updateRolePrice() {
+    const selectedRadio = document.querySelector('input[name="roleQty"]:checked');
+    const basePrice = parseInt(selectedRadio.value);
+    const checkboxes = document.querySelectorAll('.role-topping:checked');
+    
+    const extraToppings = Math.max(0, (checkboxes.length + 1) - 3);
+    const totalPrice = basePrice + (extraToppings * 5);
+
+    document.getElementById('roleTotalPrice').innerText = `Total: L ${totalPrice}`;
+    document.getElementById('roleSummary').innerText = `${checkboxes.length + 1} acompañantes (${extraToppings > 0 ? `+L ${extraToppings * 5} extra` : 'sin cargos extra'})`;
+}
+
+function addRolesToCart() {
+    const selectedRadio = document.querySelector('input[name="roleQty"]:checked');
+    const name = selectedRadio.getAttribute('data-name');
+    const basePrice = parseInt(selectedRadio.value);
+
+    const baseLiquid = document.querySelector('input[name="roleBase"]:checked').value;
+    const checkboxes = document.querySelectorAll('.role-topping:checked');
+    let toppingsList = [baseLiquid];
+    checkboxes.forEach(cb => toppingsList.push(cb.value));
+
+    const extraToppings = Math.max(0, toppingsList.length - 3);
+    const totalPrice = basePrice + (extraToppings * 5);
+
+    addToCart({
+        title: name,
+        details: `Acompañantes: ${toppingsList.join(', ')}`,
+        price: totalPrice
+    });
+}
+
+function renderGiftsPanel() {
+    const panel = document.getElementById('dynamicPanel');
+    const giftMessage = encodeURIComponent("¡Hola! Tengo una idea de regalo o una imagen de referencia que me gustaría consultarles.");
+
+    panel.innerHTML = `
+        <div class="panel-header">
+            <div class="panel-header-img-wrapper" onclick="openLightbox('${categoryImages.regalos[0]}')">
+                <img src="${categoryImages.regalos[0]}" alt="Regalos">
+            </div>
+            <div>
+                <h3>Opciones de regalos y detalles</h3>
+                <p style="color:var(--muted); font-size:13px;">Diseños personalizados para tu ocasión.</p>
+            </div>
+        </div>
+
+        <div class="gifts-custom-box">
+            <p>¿Tienes alguna imagen de referencia o algo en mente? Escríbenos y dínosla.</p>
+            <a href="https://wa.me/${PHONE_NUMBER}?text=${giftMessage}" target="_blank" class="btn btn-whatsapp" style="padding: 15px 25px; font-size: 16px;">
+                <i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i> Consultar por WhatsApp
+            </a>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
